@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Competitor Analysis — {{ company.name }}</title>
+  <style>{{ css }}</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     COVER PAGE
+══════════════════════════════════════════ -->
+<div class="cover">
+  {% if logo_data %}
+    <img class="logo" src="data:image/{{ logo_ext }};base64,{{ logo_data }}" alt="{{ company.name }} logo">
+  {% else %}
+    <div class="logo-placeholder">{{ company.name }}</div>
+  {% endif %}
+
+  <h1>Competitor<br>Analysis Report</h1>
+  <p class="subtitle">{{ company.name }} · Market Intelligence</p>
+
+  <div class="meta">
+    Generated on {{ report_date }} &nbsp;·&nbsp;
+    {{ competitor_count }} competitors analyzed
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     EXECUTIVE SUMMARY
+══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header"><h2>Executive Summary</h2></div>
+  <div class="exec-summary">{{ analysis.executive_summary }}</div>
+  {% if analysis.market_overview %}
+    <p>{{ analysis.market_overview }}</p>
+  {% endif %}
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     COMPETITOR PROFILES
+══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-header"><h2>Competitor Profiles</h2></div>
+
+  {% for c in analysis.competitor_profiles %}
+  <div class="competitor-card">
+    <div class="card-header">
+      <div>
+        <h3>{{ c.name }}</h3>
+        <div class="url">{{ c.url }}</div>
+      </div>
+      <span class="threat-badge threat-{{ c.threat_level | lower }}">
+        {{ c.threat_level }} Threat
+      </span>
+    </div>
+
+    <p><em>{{ c.positioning }}</em></p>
+    <p><strong>Target customer:</strong> {{ c.target_customer }}</p>
+    {% if c.pricing_summary %}
+      <p><strong>Pricing:</strong> {{ c.pricing_summary }}</p>
+    {% endif %}
+
+    <div class="pros-cons">
+      <div class="pros-list">
+        <h4>&#10003; Strengths</h4>
+        <ul>
+          {% for s in c.strengths %}<li>{{ s }}</li>{% endfor %}
+        </ul>
+      </div>
+      <div class="cons-list">
+        <h4>&#10007; Weaknesses</h4>
+        <ul>
+          {% for w in c.weaknesses %}<li>{{ w }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    {% if c.review_sentiment %}
+      <p style="margin-top:0.3cm; font-size:9pt; color:#555;">
+        <strong>Customer sentiment:</strong> {{ c.review_sentiment }}
+      </p>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     FEATURE COMPARISON MATRIX
+══════════════════════════════════════════ -->
+{% if analysis.feature_comparison and analysis.feature_comparison.features %}
+<div class="section">
+  <div class="section-header"><h2>Feature Comparison</h2></div>
+  <table class="matrix-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        {% for feat in analysis.feature_comparison.features %}
+          <th>{{ feat }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in analysis.feature_comparison.matrix %}
+      <tr>
+        <td>{{ row.entity }}</td>
+        {% for feat in analysis.feature_comparison.features %}
+          {% set score = row.scores.get(feat, '—') %}
+          {% if score == 'Yes' %}
+            <td class="check-yes">&#10003;</td>
+          {% elif score == 'No' %}
+            <td class="check-no">&#10007;</td>
+          {% elif score == 'Partial' %}
+            <td class="check-partial">&#9711;</td>
+          {% else %}
+            <td>{{ score }}</td>
+          {% endif %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p style="font-size:8pt; color:#888;">
+    &#10003; Available &nbsp; &#9711; Partial &nbsp; &#10007; Not available
+  </p>
+</div>
+{% endif %}
+
+
+<!-- ══════════════════════════════════════════
+     OPPORTUNITIES
+══════════════════════════════════════════ -->
+{% if analysis.opportunities %}
+<div class="section">
+  <div class="section-header"><h2>Opportunities</h2></div>
+  {% for opp in analysis.opportunities %}
+  <div class="opportunity-item">
+    <div class="item-title">{{ opp.title }}</div>
+    <p>{{ opp.description }}</p>
+    <div class="item-label">Recommended Action</div>
+    <p>{{ opp.action }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+<!-- ══════════════════════════════════════════
+     THREATS
+══════════════════════════════════════════ -->
+{% if analysis.threats %}
+<div class="section">
+  <div class="section-header"><h2>Threats to Watch</h2></div>
+  {% for threat in analysis.threats %}
+  <div class="threat-item">
+    <div class="item-title">{{ threat.title }}</div>
+    <p>{{ threat.description }}</p>
+    <div class="item-label">Mitigation</div>
+    <p>{{ threat.mitigation }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+
+<!-- ══════════════════════════════════════════
+     RECOMMENDATIONS
+══════════════════════════════════════════ -->
+{% if analysis.recommendations %}
+<div class="section">
+  <div class="section-header"><h2>Strategic Recommendations</h2></div>
+  {% for rec in analysis.recommendations %}
+  <div class="rec-item">
+    <div class="rec-number">{{ rec.priority }}</div>
+    <div class="rec-content">
+      <h4>{{ rec.title }}</h4>
+      <p>{{ rec.rationale }}</p>
+      <p class="next-step"><strong>Next step:</strong> {{ rec.next_step }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+</body>
+</html>

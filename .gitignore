@@ -1,0 +1,11 @@
+.env
+.venv/
+venv/
+.tmp/
+output/
+.claude/
+__pycache__/
+*.pyc
+*.pdf
+credentials.json
+token.json

@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family={{ font_heading }}:wght@400;600;700&family={{ font_body }}:wght@400;500&display=swap');
+
+:root {
+  --primary:     {{ primary_color }};
+  --secondary:   {{ secondary_color }};
+  --accent:      {{ accent_color }};
+  --bg:          {{ background_color }};
+  --text:        {{ text_color }};
+  --font-heading: '{{ font_heading }}', sans-serif;
+  --font-body:    '{{ font_body }}', sans-serif;
+  --page-margin: 2cm;
+}
+
+@page {
+  size: A4;
+  margin: var(--page-margin);
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: var(--font-body);
+    font-size: 8pt;
+    color: #999;
+  }
+}
+
+@page :first {
+  @bottom-right { content: ""; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 10pt;
+  color: var(--text);
+  background: white;
+  line-height: 1.6;
+}
+
+/* ── Cover Page ── */
+.cover {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3cm 2cm;
+  background: var(--primary);
+  color: white;
+  page-break-after: always;
+}
+
+.cover .logo {
+  max-height: 60px;
+  max-width: 200px;
+  margin-bottom: 2cm;
+  object-fit: contain;
+}
+
+.cover .logo-placeholder {
+  width: 160px;
+  height: 48px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2cm;
+  font-size: 9pt;
+  opacity: 0.6;
+  color: white;
+}
+
+.cover h1 {
+  font-family: var(--font-heading);
+  font-size: 32pt;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5cm;
+  color: white;
+}
+
+.cover .subtitle {
+  font-size: 14pt;
+  opacity: 0.8;
+  margin-bottom: 1cm;
+}
+
+.cover .meta {
+  font-size: 9pt;
+  opacity: 0.6;
+  margin-top: auto;
+  padding-top: 2cm;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ── Section Headings ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--primary);
+}
+
+h1 { font-size: 22pt; font-weight: 700; margin-bottom: 0.6cm; }
+h2 { font-size: 16pt; font-weight: 600; margin-bottom: 0.4cm; padding-bottom: 4pt; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 12pt; font-weight: 600; margin-bottom: 0.25cm; color: var(--secondary); }
+h4 { font-size: 10pt; font-weight: 600; margin-bottom: 0.15cm; }
+
+p { margin-bottom: 0.3cm; }
+
+/* ── Layout ── */
+.section {
+  margin-bottom: 1cm;
+  page-break-inside: avoid;
+}
+
+.section-header {
+  background: var(--primary);
+  color: white;
+  padding: 6pt 12pt;
+  border-radius: 4pt;
+  margin-bottom: 0.5cm;
+}
+
+.section-header h2 {
+  color: white;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13pt;
+}
+
+/* ── Executive Summary ── */
+.exec-summary {
+  background: var(--bg);
+  border-left: 4pt solid var(--accent);
+  padding: 0.5cm 0.7cm;
+  border-radius: 0 4pt 4pt 0;
+  margin-bottom: 0.8cm;
+  font-size: 10.5pt;
+}
+
+/* ── Competitor Profile Cards ── */
+.competitor-card {
+  border: 1pt solid #e0e0e0;
+  border-radius: 6pt;
+  padding: 0.5cm;
+  margin-bottom: 0.6cm;
+  page-break-inside: avoid;
+}
+
+.competitor-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.3cm;
+}
+
+.competitor-card h3 {
+  margin: 0;
+  font-size: 12pt;
+}
+
+.competitor-card .url {
+  font-size: 8pt;
+  color: #888;
+  margin-top: 2pt;
+}
+
+.threat-badge {
+  font-size: 8pt;
+  font-weight: 600;
+  padding: 2pt 8pt;
+  border-radius: 10pt;
+  white-space: nowrap;
+}
+.threat-high   { background: #FFE4E4; color: #C0392B; }
+.threat-medium { background: #FFF4E0; color: #D68910; }
+.threat-low    { background: #E8F8E8; color: #1E8449; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3cm;
+  margin-top: 0.3cm;
+}
+
+.card-col h4 { color: var(--primary); margin-bottom: 4pt; }
+
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3cm;
+  margin-top: 0.3cm;
+}
+
+.pros-list, .cons-list {
+  background: var(--bg);
+  border-radius: 4pt;
+  padding: 0.3cm;
+}
+
+.pros-list h4 { color: #1E8449; }
+.cons-list h4 { color: #C0392B; }
+
+ul { padding-left: 16pt; }
+li { margin-bottom: 3pt; font-size: 9.5pt; }
+
+/* ── Feature Matrix ── */
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin-bottom: 0.5cm;
+}
+
+.matrix-table th {
+  background: var(--primary);
+  color: white;
+  padding: 5pt 8pt;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 8.5pt;
+}
+
+.matrix-table th:first-child { text-align: left; }
+
+.matrix-table td {
+  padding: 5pt 8pt;
+  border-bottom: 1pt solid #eee;
+  text-align: center;
+}
+
+.matrix-table td:first-child { text-align: left; font-weight: 500; }
+
+.matrix-table tr:nth-child(even) td { background: var(--bg); }
+.matrix-table tr:first-child td { background: #EBF4FF; font-weight: 600; }
+
+.check-yes     { color: #1E8449; font-weight: 700; }
+.check-no      { color: #C0392B; }
+.check-partial { color: #D68910; }
+
+/* ── Opportunities & Threats ── */
+.opportunity-item, .threat-item {
+  border-left: 3pt solid var(--accent);
+  padding: 0.3cm 0.5cm;
+  margin-bottom: 0.4cm;
+  background: var(--bg);
+  border-radius: 0 4pt 4pt 0;
+  page-break-inside: avoid;
+}
+
+.threat-item { border-left-color: #C0392B; }
+
+.item-title { font-weight: 600; font-size: 10.5pt; color: var(--primary); margin-bottom: 3pt; }
+.item-label { font-size: 8pt; font-weight: 600; color: #888; text-transform: uppercase; margin-top: 5pt; }
+
+/* ── Recommendations ── */
+.rec-item {
+  display: flex;
+  gap: 0.4cm;
+  margin-bottom: 0.5cm;
+  page-break-inside: avoid;
+}
+
+.rec-number {
+  width: 28pt;
+  height: 28pt;
+  border-radius: 50%;
+  background: var(--secondary);
+  color: white;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rec-content h4 { margin-bottom: 3pt; }
+.rec-content .next-step { font-size: 9pt; color: #555; margin-top: 4pt; }
+.rec-content .next-step strong { color: var(--secondary); }

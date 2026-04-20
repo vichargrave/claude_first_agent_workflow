@@ -1,0 +1,22 @@
+{
+  "name": "VH Security",
+  "tagline": "AI Enhanced Pen Testing",
+  "description": "Using AI to enhance penetration testing processes and improve cybersecurity posture.",
+  "target_customer": "Mid-market SaaS companies with 50-500 employees')",
+  "category": "Security Testing Software')",
+  "key_features": [
+    "AI Enhanced",
+    "Kali Linux Integration",
+    "Easy to Use Interface"
+  ],  
+  "pricing_tiers": [
+    {"name": "Starter", "price": "Free", "description": "Security testing for learners/students"},
+    {"name": "Pro", "price": "$20/mo", "description": "Small to medium businesses"}
+  ],
+  "strengths": [
+    "Ease of use and comprehensive features",
+    "AI-enhanced testing capabilities",
+    "Integration with Kali Linux"
+  ],
+  "known_competitors": []
+}
